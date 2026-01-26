@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cornerstone Volleyball Teams</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <h1>Cornerstone Volleyball</h1>
+      <p class="muted">Fixed teams • Balanced skills • Teams of 6</p>
+    </div>
+
+    <div class="top-actions">
+      <div id="authStatus" class="muted small">Connecting…</div>
+      <button id="adminBtn" class="btn secondary">Admin</button>
+      <button id="adminLogoutBtn" class="btn ghost hidden">Exit Admin</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Prize -->
+    <section class="card">
+      <div class="card-header">
+        <h2>Prize of the Month</h2>
+        <div class="muted small" id="monthLabel"></div>
+      </div>
+
+      <div class="prize">
+        <div class="prize-media">
+          <img id="prizeImg" alt="Prize photo" />
+          <div id="prizePlaceholder" class="muted small">No prize photo</div>
+        </div>
+
+        <div class="prize-info">
+          <div class="row wrap">
+            <div>
+              <div class="label">Prize Name</div>
+              <div id="prizeName" class="value">Not set</div>
+            </div>
+          </div>
+
+          <div id="prizeAdminControls" class="admin-only hidden">
+            <div class="grid2">
+              <div>
+                <label class="label" for="prizeNameInput">Update prize name</label>
+                <input id="prizeNameInput" type="text" placeholder="e.g., New volleyball" />
+              </div>
+              <div>
+                <label class="label" for="prizePhotoInput">Update prize photo</label>
+                <input id="prizePhotoInput" type="file" accept="image/*" />
+              </div>
+            </div>
+
+            <div class="row wrap">
+              <button id="savePrizeBtn" class="btn primary">Save Prize</button>
+              <button id="clearPrizeBtn" class="btn danger">Clear Prize</button>
+            </div>
+
+            <div class="muted small">
+              Note: prize changes are shared to everyone.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Add Player -->
+    <section class="card">
+      <div class="card-header">
+        <h2>Add a Player</h2>
+        <p class="muted small">Players can add themselves. Teams are fixed until admin generates.</p>
+      </div>
+
+      <form id="playerForm" class="form">
+        <div class="grid3">
+          <div>
+            <label class="label" for="firstName">First name</label>
+            <input id="firstName" required maxlength="30" />
+          </div>
+          <div>
+            <label class="label" for="lastName">Last name</label>
+            <input id="lastName" required maxlength="30" />
+          </div>
+          <div>
+            <label class="label" for="skill">Skill</label>
+            <select id="skill" required>
+              <option value="Beginner">Beginner</option>
+              <option value="Intermediate">Intermediate</option>
+              <option value="Advanced">Advanced</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid2">
+          <div>
+            <label class="label" for="playerPhoto">Photo (optional)</label>
+            <input id="playerPhoto" type="file" accept="image/*" />
+          </div>
+          <div class="row end">
+            <button class="btn primary" type="submit">Add Player</button>
+          </div>
+        </div>
+      </form>
+
+      <div class="muted small">
+        Tip: Players will appear in “Unassigned/Bench” until the admin generates teams.
+      </div>
+    </section>
+
+    <!-- Roster -->
+    <section class="card">
+      <div class="card-header">
+        <h2>Roster</h2>
+        <p class="muted small">Anyone can mark absent/present for today.</p>
+      </div>
+      <div id="roster" class="roster"></div>
+    </section>
+
+    <!-- Teams -->
+    <section class="card">
+      <div class="card-header">
+        <h2>Teams</h2>
+        <div class="row wrap">
+          <button id="generateTeamsBtn" class="btn primary admin-only hidden">Generate Teams</button>
+          <button id="clearAssignmentsBtn" class="btn danger admin-only hidden">Clear Teams</button>
+          <button id="resetWinsBtn" class="btn ghost admin-only hidden">Reset This Month Wins</button>
+        </div>
+      </div>
+
+      <div id="teamMeta" class="muted small"></div>
+
+      <div id="teams" class="teams"></div>
+
+      <div class="bench">
+        <h3>Unassigned / Bench</h3>
+        <div id="benchList" class="bench-list"></div>
+      </div>
+    </section>
+
+    <!-- Gallery -->
+    <section class="card">
+      <div class="card-header">
+        <h2>Game Photos</h2>
+        <p class="muted small">These are shared (stored in Firebase Storage).</p>
+      </div>
+
+      <div class="grid2">
+        <div>
+          <label class="label" for="galleryInput">Upload photos</label>
+          <input id="galleryInput" type="file" accept="image/*" multiple />
+        </div>
+        <div class="row end">
+          <button id="addGalleryBtn" class="btn primary">Add to Gallery</button>
+        </div>
+      </div>
+
+      <div id="gallery" class="gallery"></div>
+    </section>
+  </main>
+
+  <!-- Admin Modal -->
+  <div id="modalBackdrop" class="modal-backdrop hidden"></div>
+  <div id="adminModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="adminTitle">
+    <div class="modal-header">
+      <h2 id="adminTitle">Admin Access</h2>
+      <button id="closeAdminModal" class="btn ghost">Close</button>
+    </div>
+
+    <div class="modal-body">
+      <p class="muted small">
+        Admin mode enables: team generation, manual moves, wins, prize edits, and deletions.
+      </p>
+
+      <div class="grid2">
+        <div>
+          <label class="label" for="adminPasscode">Admin password</label>
+          <input id="adminPasscode" type="password" placeholder="Enter admin password" />
+          <div class="muted small" id="adminEmailHint"></div>
+        </div>
+        <div class="row end">
+          <button id="adminLoginBtn" class="btn primary">Enter Admin Mode</button>
+        </div>
+      </div>
+
+      <hr />
+
+      <div class="muted small">
+        Security note: This uses Firebase Email/Password authentication behind the scenes, but the UI only asks for the password.
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
