@@ -38,12 +38,13 @@ import {
 
 // 1) Paste your Firebase config here (Project settings -> Your apps -> Web app config)
 const firebaseConfig = {
-  // apiKey: "...",
-  // authDomain: "...",
-  // projectId: "...",
-  // storageBucket: "...",
-  // messagingSenderId: "...",
-  // appId: "..."
+apiKey: "AIzaSyC911FJT_ByP212GvHZyH69Tx-i1GeUz6w",
+  authDomain: "cornerstone-volleyball-teams.firebaseapp.com",
+  projectId: "cornerstone-volleyball-teams",
+  storageBucket: "cornerstone-volleyball-teams.firebasestorage.app",
+  messagingSenderId: "969371955303",
+  appId: "1:969371955303:web:2685a92de276f61c25a4c2",
+  measurementId: "G-VTRKHW3T6Y"
 };
 
 // 2) Set the admin email you will create in Firebase Authentication (Email/Password)
@@ -952,4 +953,5 @@ function humanizeError(e) {
   if (e.code === "auth/user-not-found") return "Admin account not found in Firebase Auth.";
   if (e.code === "permission-denied") return "Permission denied (check Firestore/Storage rules).";
   return msg;
+
 }
