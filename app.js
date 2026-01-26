@@ -581,34 +581,12 @@ async function generateTeamsFixed() {
 /* ===========================
    RENDER
 =========================== */
-const DEFAULT_PRIZE = {
-  name: "Prize of the Month",
-  photoUrl: "https://davidsalehi.github.io/cornerstone-volleyball1/Diamond.png"
-};
-
 function renderAll() {
   renderPrize();
   renderRoster();
   renderTeams();
   renderGallery();
   updateAdminUI();
-}
-
-function renderPrize() {
-  const effectiveUrl = (prize.photoUrl || DEFAULT_PRIZE.photoUrl || "").trim();
-  const effectiveName = (prize.name || DEFAULT_PRIZE.name || "").trim();
-
-  if (effectiveUrl) {
-    prizeImg.src = effectiveUrl;
-    prizeImg.style.display = "block";
-    prizePlaceholder.style.display = "none";
-  } else {
-    prizeImg.removeAttribute("src");
-    prizeImg.style.display = "none";
-    prizePlaceholder.style.display = "flex";
-  }
-
-  prizeName.textContent = effectiveName || "Not set";
 }
 
 function updateAdminUI() {
@@ -976,4 +954,5 @@ function humanizeError(e) {
   return msg;
 
 }
+
 
