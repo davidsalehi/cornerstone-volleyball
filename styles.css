@@ -321,7 +321,7 @@ input:focus, select:focus{
 }
 .bench-list{
   display:flex;
-  flex-wrap: wrap;
+  flex-wrap: column;
   gap: 8px;
 }
 .bench-pill{
@@ -396,4 +396,5 @@ hr{
   border:none;
   border-top: 1px solid var(--border);
   margin: 14px 0;
+
 }
