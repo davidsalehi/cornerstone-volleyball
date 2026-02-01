@@ -471,3 +471,11 @@ body{
 #prizeName{
   text-align: center;
 }
+/* If prize area is laid out side-by-side, force it to be centered/stacked */
+.prize-card, .prize, .prize-panel{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+}
