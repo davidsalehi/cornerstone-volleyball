@@ -108,6 +108,7 @@ const benchList = document.getElementById("benchList");
 const galleryInput = document.getElementById("galleryInput");
 const addGalleryBtn = document.getElementById("addGalleryBtn");
 const galleryEl = document.getElementById("gallery");
+
 const lightboxBackdrop = document.getElementById("lightboxBackdrop");
 const lightbox = document.getElementById("lightbox");
 const lightboxImg = document.getElementById("lightboxImg");
@@ -1021,22 +1022,31 @@ function openLightbox(src) {
   lightboxImg.src = src;
   lightboxBackdrop.classList.remove("hidden");
   lightbox.classList.remove("hidden");
-  document.addEventListener("keydown", onLightboxKeydown);
 }
 
 function closeLightbox() {
   lightboxImg.removeAttribute("src");
   lightboxBackdrop.classList.add("hidden");
   lightbox.classList.add("hidden");
-  document.removeEventListener("keydown", onLightboxKeydown);
 }
-
-function onLightboxKeydown(e) {
-  if (e.key === "Escape") closeLightbox();
-}
-
+  // Close actions
 lightboxBackdrop.addEventListener("click", closeLightbox);
 lightboxClose.addEventListener("click", closeLightbox);
 
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") closeLightbox();
+});
+
+// Catch-all: click ANY image in the app to enlarge
+document.addEventListener("click", (e) => {
+  const t = e.target;
+  if (!(t instanceof HTMLImageElement)) return;     // only images
+  if (t.id === "lightboxImg") return;               // ignore the enlarged image itself
+
+  const src = t.currentSrc || t.src;
+  if (!src) return;
+
+  openLightbox(src);
+});
 
 
