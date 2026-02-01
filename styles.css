@@ -398,3 +398,40 @@ hr{
   margin: 14px 0;
 
 }
+/* Lightbox */
+.lightbox-backdrop{
+  position:fixed;
+  inset:0;
+  background: rgba(0,0,0,.75);
+  z-index: 50;
+}
+
+.lightbox{
+  position:fixed;
+  inset: 0;
+  z-index: 51;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding: 18px;
+}
+
+.lightbox img{
+  max-width: min(1100px, 96vw);
+  max-height: 92vh;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  background: #0b1222;
+}
+
+.lightbox-close{
+  position: fixed;
+  top: 14px;
+  right: 14px;
+}
+
+/* Make images feel clickable */
+img.zoomable{
+  cursor: zoom-in;
+}
