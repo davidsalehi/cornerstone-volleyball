@@ -438,4 +438,21 @@ hr{
   cursor: zoom-in;
 }
 }
+:root{
+  --bg-img: url("https://davidsalehi.github.io/cornerstone-volleyball/assets/cornerstone-church.jpg");
+}
 
+/* Background image + dark overlay for readability */
+body{
+  background:
+    linear-gradient(rgba(8,12,20,.80), rgba(8,12,20,.80)),
+    var(--bg-img);
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;  /* nice parallax feel on desktop */
+  background-repeat: no-repeat;
+}
+.card, .panel, .section{
+  background: rgba(10,16,28,.75);
+  backdrop-filter: blur(6px);
+}
