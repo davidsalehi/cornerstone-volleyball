@@ -108,6 +108,10 @@ const benchList = document.getElementById("benchList");
 const galleryInput = document.getElementById("galleryInput");
 const addGalleryBtn = document.getElementById("addGalleryBtn");
 const galleryEl = document.getElementById("gallery");
+const lightboxBackdrop = document.getElementById("lightboxBackdrop");
+const lightbox = document.getElementById("lightbox");
+const lightboxImg = document.getElementById("lightboxImg");
+const lightboxClose = document.getElementById("lightboxClose");
 
 /* ===========================
    STATE
@@ -604,6 +608,9 @@ function renderPrize() {
     prizeImg.src = prize.photoUrl;
     prizeImg.style.display = "block";
     prizePlaceholder.style.display = "none";
+    
+    prizeImg.classList.add("zoomable");
+    prizeImg.onclick = () => openLightbox(prize.photoUrl);
   } else {
     prizeImg.removeAttribute("src");
     prizeImg.style.display = "none";
@@ -641,7 +648,14 @@ function renderRoster() {
 
     const avatar = document.createElement("div");
     avatar.className = "avatar";
-    avatar.innerHTML = `<img alt="" src="${p.photoUrl || placeholderAvatar(p)}" />`;
+    const imgSrc = p.photoUrl || placeholderAvatar(p);
+    avatar.innerHTML = "";
+    const img = document.createElement("img");
+    img.alt = "";
+    img.src = imgSrc;
+    img.classList.add("zoomable");
+    img.addEventListener("click", () => openLightbox(imgSrc));
+    avatar.appendChild(img);
 
     const info = document.createElement("div");
     info.style.minWidth = "0";
@@ -909,6 +923,8 @@ function renderGallery() {
 
     const img = document.createElement("img");
     img.src = ph.url;
+    img.classList.add("zoomable");
+    img.addEventListener("click", () => openLightbox(ph.url));
     img.alt = "Game photo";
 
     card.appendChild(img);
@@ -1000,6 +1016,27 @@ function humanizeError(e) {
   return msg;
 
 }
+function openLightbox(src) {
+  if (!src) return;
+  lightboxImg.src = src;
+  lightboxBackdrop.classList.remove("hidden");
+  lightbox.classList.remove("hidden");
+  document.addEventListener("keydown", onLightboxKeydown);
+}
+
+function closeLightbox() {
+  lightboxImg.removeAttribute("src");
+  lightboxBackdrop.classList.add("hidden");
+  lightbox.classList.add("hidden");
+  document.removeEventListener("keydown", onLightboxKeydown);
+}
+
+function onLightboxKeydown(e) {
+  if (e.key === "Escape") closeLightbox();
+}
+
+lightboxBackdrop.addEventListener("click", closeLightbox);
+lightboxClose.addEventListener("click", closeLightbox);
 
 
 
