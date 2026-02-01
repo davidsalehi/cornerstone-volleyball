@@ -456,3 +456,18 @@ body{
   background: rgba(10,16,28,.75);
   backdrop-filter: blur(6px);
 }
+/* Center Prize of the Month content */
+#prizeImg{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#prizePlaceholder{
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#prizeName{
+  text-align: center;
+}
