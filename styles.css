@@ -431,7 +431,11 @@ hr{
   right: 14px;
 }
 
-/* Make images feel clickable */
-img.zoomable{
+/* Make your app images feel clickable */
+.avatar img,
+.prize-media img,
+.photo-card img{
   cursor: zoom-in;
 }
+}
+
