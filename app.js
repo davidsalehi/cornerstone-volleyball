@@ -499,7 +499,17 @@ async function movePlayer(playerId, teamIdOrNull) {
     updatedBy: currentUser.uid
   }, { merge: true });
 }
+async function updatePlayerSkill(playerId, newSkill) {
+  if (!isAdmin) return;
+  const allowed = ["Beginner", "Intermediate", "Advanced"];
+  if (!allowed.includes(newSkill)) throw new Error("Invalid skill.");
 
+  await setDoc(doc(db, "players", playerId), {
+    skill: newSkill,
+    updatedAt: serverTimestamp(),
+    updatedBy: currentUser.uid
+  }, { merge: true });
+}
 /* ===========================
    TEAM GENERATION (FIXED)
 =========================== */
@@ -691,6 +701,26 @@ function renderRoster() {
     right.appendChild(absentLabel);
 
     if (isAdmin) {
+      // Admin: change skill dropdown
+const skillSel = document.createElement("select");
+skillSel.innerHTML = `
+  <option value="Beginner">Beginner</option>
+  <option value="Intermediate">Intermediate</option>
+  <option value="Advanced">Advanced</option>
+`;
+skillSel.value = p.skill || "Beginner";
+
+skillSel.addEventListener("change", async (e) => {
+  try {
+    await updatePlayerSkill(p.id, e.target.value);
+  } catch (err) {
+    alert(humanizeError(err));
+    // revert UI if update fails
+    skillSel.value = p.skill || "Beginner";
+  }
+});
+
+right.appendChild(skillSel);
       const delBtn = document.createElement("button");
       delBtn.className = "btn danger";
       delBtn.textContent = "Delete";
@@ -1048,5 +1078,6 @@ document.addEventListener("click", (e) => {
 
   openLightbox(src);
 });
+
 
 
