@@ -479,3 +479,48 @@ body{
   text-align: center;
   gap: 10px;
 }
+/* Top bar baptism announcement */
+.top-announcement{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: rgba(10,16,28,.55);
+  backdrop-filter: blur(6px);
+  max-width: 820px;
+  overflow: hidden;
+}
+
+.top-announcement__label{
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.top-announcement__text{
+  opacity: .9;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.top-announcement__link{
+  white-space: nowrap;
+  font-weight: 700;
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+}
+
+.top-announcement__link:hover{
+  text-decoration: underline;
+}
+
+/* Mobile: shorten the text so the header stays clean */
+@media (max-width: 900px){
+  .top-announcement__text{
+    display: none;
+  }
+}
