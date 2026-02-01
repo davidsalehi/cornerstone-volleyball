@@ -380,7 +380,7 @@ async function addPlayer({ first, last, skill, photoFile }) {
     const playerIdForPath = crypto.randomUUID();
     storagePath = `playerPhotos/${playerIdForPath}`;
     const storageRef = ref(storage, storagePath);
-    await uploadBytes(storageRef, photoFile);
+    await uploadBytes(storageRef, photoFile, { contentType: photoFile.type || "image/jpeg" });
     photoUrl = await getDownloadURL(storageRef);
   }
 
@@ -410,7 +410,7 @@ async function savePrize({ name, photoFile }) {
   if (photoFile) {
     storagePath = "prize/current";
     const storageRef = ref(storage, storagePath);
-    await uploadBytes(storageRef, photoFile);
+    await uploadBytes(storageRef, photoFile, { contentType: photoFile.type || "image/jpeg" });
     photoUrl = await getDownloadURL(storageRef);
   }
 
@@ -440,7 +440,7 @@ async function uploadGamePhoto(file) {
   const storagePath = `gamePhotos/${photoId}`;
   const storageRef = ref(storage, storagePath);
 
-  await uploadBytes(storageRef, file);
+  await uploadBytes(storageRef, file, { contentType: file.type || "image/jpeg" });
   const url = await getDownloadURL(storageRef);
 
   await setDoc(doc(db, "photos", photoId), {
@@ -1078,6 +1078,7 @@ document.addEventListener("click", (e) => {
 
   openLightbox(src);
 });
+
 
 
 
