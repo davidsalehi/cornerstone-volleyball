@@ -845,9 +845,55 @@ function renderTeams() {
     teamsEl.appendChild(card);
   }
 
-  benchList.innerHTML = bench.length
-    ? bench.map(p => benchPill(p)).join("")
-    : `<span class="muted small">No bench players.</span>`;
+  // Render bench with admin "Move to..." dropdown
+benchList.innerHTML = "";
+
+if (!bench.length) {
+  benchList.innerHTML = `<span class="muted small">No bench players.</span>`;
+} else {
+  for (const p of bench) {
+    const chip = document.createElement("div");
+    chip.className = "player-chip";
+
+    const left = document.createElement("div");
+    left.className = "chip-left";
+    left.innerHTML = `
+      <div class="avatar"><img alt="" src="${p.photoUrl || placeholderAvatar(p)}"></div>
+      <div style="min-width:0">
+        <div class="chip-name">${escapeHtml(p.first)} ${escapeHtml(p.last)}</div>
+        <div class="chip-skill">${escapeHtml(p.skill)}</div>
+      </div>
+    `;
+
+    const right = document.createElement("div");
+    right.className = "chip-actions";
+
+    // Admin move dropdown (from Bench -> Team X)
+    if (isAdmin) {
+      const sel = document.createElement("select");
+      sel.innerHTML = [
+        `<option value="">Move to…</option>`,
+        ...teams.map(tt => `<option value="${tt.id}">Team ${tt.id}</option>`)
+      ].join("");
+
+      sel.addEventListener("change", async (e) => {
+        try {
+          const v = e.target.value;
+          if (!v) return;
+          await movePlayer(p.id, Number(v)); // move from bench to selected team
+          sel.value = "";
+        } catch (err) {
+          alert(humanizeError(err));
+        }
+      });
+
+      right.appendChild(sel);
+    }
+
+    chip.appendChild(left);
+    chip.appendChild(right);
+    benchList.appendChild(chip);
+  }
 }
 
 function renderGallery() {
@@ -954,5 +1000,6 @@ function humanizeError(e) {
   return msg;
 
 }
+
 
 
