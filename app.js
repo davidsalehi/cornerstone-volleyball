@@ -940,6 +940,8 @@ if (!bench.length) {
     benchList.appendChild(chip);
   }
 }
+  
+} // ✅ CLOSE renderTeams() HERE
 
 function renderGallery() {
   if (!photos.length) {
@@ -1078,6 +1080,7 @@ document.addEventListener("click", (e) => {
 
   openLightbox(src);
 });
+
 
 
 
