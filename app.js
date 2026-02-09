@@ -1080,6 +1080,7 @@ document.addEventListener("click", (e) => {
 
   openLightbox(src);
 });
+absentLabel.innerHTML = `<input type="checkbox" ${absent ? "checked" : ""} /> <span class="absent-text">Absent</span>`;
 
 
 
