@@ -523,4 +523,68 @@ body{
     display: none;
   }
 }
+/* --- Mobile safety: never allow horizontal overflow --- */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* iOS notch safe-area padding (top bar) */
+.topbar {
+  padding-top: calc(12px + env(safe-area-inset-top));
+}
+
+/* --- Mobile layout fixes --- */
+@media (max-width: 520px) {
+
+  /* Make cards fit nicely on small screens */
+  .container {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  /* Player rows: stack vertically so right controls don't push content off-screen */
+  .player-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  /* Left section should be allowed to shrink */
+  .player-left {
+    min-width: 0;
+    width: 100%;
+  }
+
+  /* Allow the name + badge to wrap instead of forcing one long line */
+  .player-name {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    white-space: normal;
+  }
+
+  /* Right section: put absent control on its own line, aligned nicely */
+  .player-row .row {
+    width: 100%;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  /* Make the checkbox easier to tap on phones */
+  input[type="checkbox"] {
+    width: 22px;
+    height: 22px;
+  }
+
+  /* Ensure the Admin button never gets squished */
+  #adminBtn, #adminLogoutBtn {
+    min-width: 76px;
+    padding: 10px 12px;
+  }
+}
+@media (max-width: 520px) {
+  .absent-text { display: none; }
+}
 
