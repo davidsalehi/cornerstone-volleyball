@@ -113,7 +113,87 @@ const lightboxBackdrop = document.getElementById("lightboxBackdrop");
 const lightbox = document.getElementById("lightbox");
 const lightboxImg = document.getElementById("lightboxImg");
 const lightboxClose = document.getElementById("lightboxClose");
+/* ===========================
+   SCOREBOARD
+=========================== */
 
+const scoreboardEl = document.getElementById("scoreboard");
+const openScoreboardBtn = document.getElementById("openScoreboardBtn");
+const scoreCloseBtn = document.getElementById("scoreCloseBtn");
+const scoreResetBtn = document.getElementById("scoreResetBtn");
+
+const teamASquare = document.getElementById("teamASquare");
+const teamBSquare = document.getElementById("teamBSquare");
+const teamAScoreEl = document.getElementById("teamAScore");
+const teamBScoreEl = document.getElementById("teamBScore");
+
+let scoreA = 0;
+let scoreB = 0;
+
+function renderScoreboard() {
+  teamAScoreEl.textContent = String(scoreA);
+  teamBScoreEl.textContent = String(scoreB);
+}
+
+function openScoreboard() {
+  scoreboardEl.classList.remove("hidden");
+  renderScoreboard();
+}
+
+function closeScoreboard() {
+  scoreboardEl.classList.add("hidden");
+}
+function attachTapHandlers(el, onPlus, onMinus) {
+  let tapCount = 0;
+  let timer = null;
+
+  el.addEventListener("click", () => {
+    tapCount += 1;
+
+    // start / restart timer window
+    if (timer) clearTimeout(timer);
+
+    timer = setTimeout(() => {
+      // When timer expires, decide what happened
+      if (tapCount >= 3) {
+        onMinus();
+      } else if (tapCount === 1) {
+        onPlus();
+      } else {
+        // double tap: ignore (or you can decide to do something)
+      }
+
+      tapCount = 0;
+      timer = null;
+    }, 450);
+  });
+}
+openScoreboardBtn?.addEventListener("click", openScoreboard);
+scoreCloseBtn?.addEventListener("click", closeScoreboard);
+
+scoreResetBtn?.addEventListener("click", () => {
+  scoreA = 0;
+  scoreB = 0;
+  renderScoreboard();
+});
+
+// Tap actions
+if (teamASquare && teamBSquare && teamAScoreEl && teamBScoreEl && scoreboardEl) {
+  attachTapHandlers(teamASquare,
+    () => { scoreA += 1; renderScoreboard(); },
+    () => { scoreA = Math.max(0, scoreA - 1); renderScoreboard(); }
+  );
+
+  attachTapHandlers(teamBSquare,
+    () => { scoreB += 1; renderScoreboard(); },
+    () => { scoreB = Math.max(0, scoreB - 1); renderScoreboard(); }
+  );
+}
+
+// Escape closes
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && !scoreboardEl.classList.contains("hidden")) closeScoreboard();
+});
 /* ===========================
    STATE
 =========================== */
@@ -689,7 +769,8 @@ function renderRoster() {
     absentLabel.style.display = "flex";
     absentLabel.style.alignItems = "center";
     absentLabel.style.gap = "6px";
-    absentLabel.innerHTML = `<input type="checkbox" ${absent ? "checked" : ""} /> Absent`;
+    absentLabel.innerHTML =
+  `<input type="checkbox" ${absent ? "checked" : ""} /> <span class="absent-text">Absent</span>`;
     absentLabel.querySelector("input").addEventListener("change", async (e) => {
       try {
         await setAbsent(p.id, e.target.checked);
@@ -935,12 +1016,11 @@ if (!bench.length) {
       right.appendChild(sel);
     }
 
-    chip.appendChild(left);
-    chip.appendChild(right);
-    benchList.appendChild(chip);
+      chip.appendChild(left);
+      chip.appendChild(right);
+      benchList.appendChild(chip);
+    }
   }
-}
-  
 } // ✅ CLOSE renderTeams() HERE
 
 function renderGallery() {
@@ -1080,9 +1160,3 @@ document.addEventListener("click", (e) => {
 
   openLightbox(src);
 });
-absentLabel.innerHTML = `<input type="checkbox" ${absent ? "checked" : ""} /> <span class="absent-text">Absent</span>`;
-
-
-
-
-
