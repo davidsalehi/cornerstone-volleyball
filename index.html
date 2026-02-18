@@ -2,30 +2,37 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Cornerstone Volleyball Teams</title>
   <link rel="stylesheet" href="./styles.css" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 </head>
+
 <body>
   <header class="topbar">
     <div class="brand">
       <h1>Cornerstone Church Volleyball</h1>
       <p class="muted">Fixed teams • Balanced skills • Teams of 6</p>
+
       <div class="top-announcement">
-  <span class="top-announcement__label">Baptism:</span>
-  <span class="top-announcement__text">Interested in being baptized? Learn what it means and how to sign up.</span>
-  <a class="top-announcement__link"
-     href="https://cornerstone.org/baptism/"
-     target="_blank"
-     rel="noopener noreferrer">
-    Learn more
-  </a>
-</div>
+        <span class="top-announcement__label">Baptism:</span>
+        <span class="top-announcement__text">
+          Interested in being baptized? Learn what it means and how to sign up.
+        </span>
+        <a class="top-announcement__link"
+           href="https://cornerstone.org/baptism/"
+           target="_blank"
+           rel="noopener noreferrer">
+          Learn more
+        </a>
+      </div>
     </div>
 
     <div class="top-actions">
       <div id="authStatus" class="muted small">Connecting…</div>
+
+      <!-- ✅ Added Scores button (your JS expects this id) -->
+      <button id="openScoreboardBtn" class="btn secondary">Scores</button>
+
       <button id="adminBtn" class="btn secondary">Admin</button>
       <button id="adminLogoutBtn" class="btn ghost hidden">Exit Admin</button>
     </div>
@@ -70,9 +77,7 @@
               <button id="clearPrizeBtn" class="btn danger">Clear Prize</button>
             </div>
 
-            <div class="muted small">
-              Note: prize changes are shared to everyone.
-            </div>
+            <div class="muted small">Note: prize changes are shared to everyone.</div>
           </div>
         </div>
       </div>
@@ -142,7 +147,6 @@
       </div>
 
       <div id="teamMeta" class="muted small"></div>
-
       <div id="teams" class="teams"></div>
 
       <div class="bench">
@@ -203,46 +207,40 @@
       </div>
     </div>
   </div>
-<!-- Lightbox (click any image to enlarge) -->
-<div id="lightboxBackdrop" class="lightbox-backdrop hidden"></div>
-<div id="lightbox" class="lightbox hidden" role="dialog" aria-modal="true" aria-label="Image preview">
-  <button id="lightboxClose" class="btn ghost lightbox-close">Close</button>
-  <img id="lightboxImg" alt="Enlarged view" />
-</div>
-  <script type="module" src="./app.js?v=1"></script>
+
+  <!-- Lightbox -->
+  <div id="lightboxBackdrop" class="lightbox-backdrop hidden"></div>
+  <div id="lightbox" class="lightbox hidden" role="dialog" aria-modal="true" aria-label="Image preview">
+    <button id="lightboxClose" class="btn ghost lightbox-close">Close</button>
+    <img id="lightboxImg" alt="Enlarged view" />
+  </div>
+
   <!-- SCOREBOARD (hidden by default) -->
-<div id="scoreboard" class="scoreboard hidden">
-  <div class="scoreboard-top">
-    <div class="scoreboard-title">Scoreboard</div>
-    <div class="scoreboard-actions">
-      <button id="scoreResetBtn" class="btn secondary">Reset</button>
-      <button id="scoreCloseBtn" class="btn">Close</button>
+  <div id="scoreboard" class="scoreboard hidden">
+    <div class="scoreboard-top">
+      <div class="scoreboard-title">Scoreboard</div>
+      <div class="scoreboard-actions">
+        <button id="scoreResetBtn" class="btn secondary">Reset</button>
+        <button id="scoreCloseBtn" class="btn">Close</button>
+      </div>
+    </div>
+
+    <div class="scoreboard-grid">
+      <button id="teamASquare" class="score-square" type="button" aria-label="Team A score">
+        <div class="score-team">Team A</div>
+        <div id="teamAScore" class="score-num">0</div>
+        <div class="score-hint">Tap +1 • Triple tap −1</div>
+      </button>
+
+      <button id="teamBSquare" class="score-square" type="button" aria-label="Team B score">
+        <div class="score-team">Team B</div>
+        <div id="teamBScore" class="score-num">0</div>
+        <div class="score-hint">Tap +1 • Triple tap −1</div>
+      </button>
     </div>
   </div>
 
-  <div class="scoreboard-grid">
-    <button id="teamASquare" class="score-square" type="button" aria-label="Team A score">
-      <div class="score-team">Team A</div>
-      <div id="teamAScore" class="score-num">0</div>
-      <div class="score-hint">Tap +1 • Triple tap −1</div>
-    </button>
-
-    <button id="teamBSquare" class="score-square" type="button" aria-label="Team B score">
-      <div class="score-team">Team B</div>
-      <div id="teamBScore" class="score-num">0</div>
-      <div class="score-hint">Tap +1 • Triple tap −1</div>
-    </button>
-  </div>
-</div>
+  <!-- ✅ IMPORTANT: script goes LAST so all elements exist -->
+  <script type="module" src="./app.js?v=2"></script>
 </body>
-
 </html>
-
-
-
-
-
-
-
-
-
