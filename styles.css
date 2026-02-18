@@ -587,4 +587,87 @@ html, body {
 @media (max-width: 520px) {
   .absent-text { display: none; }
 }
+/* ===== Scoreboard Fullscreen ===== */
+
+.scoreboard.hidden { display: none; }
+
+.scoreboard {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0,0,0,0.92);
+  display: flex;
+  flex-direction: column;
+  padding: calc(12px + env(safe-area-inset-top)) 12px calc(12px + env(safe-area-inset-bottom));
+}
+
+.scoreboard-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.scoreboard-title{
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.scoreboard-actions{
+  display:flex;
+  gap: 10px;
+}
+
+/* two squares filling screen */
+.scoreboard-grid{
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.score-square{
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 18px;
+  background: rgba(20,30,55,0.55);
+  color: #fff;
+  display:flex;
+  flex-direction: column;
+  align-items:center;
+  justify-content:center;
+  user-select:none;
+  -webkit-user-select:none;
+  touch-action: manipulation; /* helps taps feel responsive */
+}
+
+.score-team{
+  font-size: 16px;
+  opacity: 0.85;
+  margin-bottom: 8px;
+}
+
+.score-num{
+  font-size: 96px;
+  font-weight: 800;
+  line-height: 1;
+  margin: 6px 0 10px;
+}
+
+.score-hint{
+  font-size: 12px;
+  opacity: 0.65;
+}
+
+/* On very small phones: stack vertically */
+@media (max-width: 520px){
+  .scoreboard-grid{
+    grid-template-columns: 1fr;
+  }
+  .score-num{
+    font-size: 88px;
+  }
+}
+
 
