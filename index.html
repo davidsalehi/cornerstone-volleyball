@@ -210,9 +210,34 @@
   <img id="lightboxImg" alt="Enlarged view" />
 </div>
   <script type="module" src="./app.js?v=1"></script>
+  <!-- SCOREBOARD (hidden by default) -->
+<div id="scoreboard" class="scoreboard hidden">
+  <div class="scoreboard-top">
+    <div class="scoreboard-title">Scoreboard</div>
+    <div class="scoreboard-actions">
+      <button id="scoreResetBtn" class="btn secondary">Reset</button>
+      <button id="scoreCloseBtn" class="btn">Close</button>
+    </div>
+  </div>
+
+  <div class="scoreboard-grid">
+    <button id="teamASquare" class="score-square" type="button" aria-label="Team A score">
+      <div class="score-team">Team A</div>
+      <div id="teamAScore" class="score-num">0</div>
+      <div class="score-hint">Tap +1 • Triple tap −1</div>
+    </button>
+
+    <button id="teamBSquare" class="score-square" type="button" aria-label="Team B score">
+      <div class="score-team">Team B</div>
+      <div id="teamBScore" class="score-num">0</div>
+      <div class="score-hint">Tap +1 • Triple tap −1</div>
+    </button>
+  </div>
+</div>
 </body>
 
 </html>
+
 
 
 
