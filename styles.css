@@ -669,5 +669,67 @@ html, body {
     font-size: 88px;
   }
 }
+/* ===== Scoreboard Fullscreen (FINAL) ===== */
+#scoreboard.hidden { display: none !important; }
+
+#scoreboard{
+  position: fixed;
+  inset: 0;
+  z-index: 99999; /* above everything */
+  background: rgba(0,0,0,0.92);
+  display: flex;
+  flex-direction: column;
+  padding: calc(12px + env(safe-area-inset-top)) 12px calc(12px + env(safe-area-inset-bottom));
+}
+
+#scoreboard .scoreboard-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+#scoreboard .scoreboard-title{
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+}
+
+#scoreboard .scoreboard-actions{
+  display:flex;
+  gap: 10px;
+}
+
+#scoreboard .scoreboard-grid{
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+#scoreboard .score-square{
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 18px;
+  background: rgba(20,30,55,0.55);
+  color: #fff;
+  display:flex;
+  flex-direction: column;
+  align-items:center;
+  justify-content:center;
+  user-select:none;
+  -webkit-user-select:none;
+  touch-action: manipulation;
+}
+
+#scoreboard .score-team{ font-size: 16px; opacity: 0.85; margin-bottom: 8px; }
+#scoreboard .score-num{ font-size: 96px; font-weight: 800; line-height: 1; margin: 6px 0 10px; }
+#scoreboard .score-hint{ font-size: 12px; opacity: 0.65; }
+
+@media (max-width: 520px){
+  #scoreboard .scoreboard-grid{ grid-template-columns: 1fr; }
+  #scoreboard .score-num{ font-size: 88px; }
+}
+
 
 
